@@ -51,6 +51,9 @@ export default function HomeComponent() {
         <Heading textAlign={"center"} size={"2xl"}>
           Password AI
         </Heading>
+        <Text textAlign={"center"} fontStyle={"italic"}>
+          V2.0
+        </Text>
         <Text textAlign={"center"}>
           ¡Tu superHéroe digital de las contraseñas!
         </Text>
@@ -138,9 +141,12 @@ export default function HomeComponent() {
         })}
       </HStack>
       <Divider my={5} />
-      <Box width={{ base: "70%" }} margin={"auto"} mt={10}>
+      <Box width={{ base: "80%" }} margin={"auto"} mt={10}>
         <Button
-          colorScheme={"lightBlue"}
+          bg={"#176BEF"}
+          _pressed={{
+            bg: "#179c52",
+          }}
           rightIcon={<Fontisto name="google" size={24} color="white" />}
         >
           <Text color={"white"}>Accede con tu cuenta Google</Text>
