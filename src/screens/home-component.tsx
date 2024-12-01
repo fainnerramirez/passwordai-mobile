@@ -19,6 +19,8 @@ import Ionicons from "@expo/vector-icons/Ionicons";
 import StatComponent from "../components/stat-component";
 import Fontisto from "@expo/vector-icons/Fontisto";
 import CreateAccount from "../components/create-account";
+import { auth } from "../firebase/firebase.config";
+import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 
 const dataStat = [
   {
@@ -58,6 +60,17 @@ export default function HomeComponent() {
       .fill(0)
       .map(() => chars[Math.floor(Math.random() * chars.length)])
       .join("");
+  };
+
+  const handleAuthGoogle = async () => {
+    // Authenticate with Google
+    console.log("Authenticating with Google...");
+    try {
+      const result = await signInWithPopup(auth, new GoogleAuthProvider());
+      console.log("Result: ", result);
+    } catch (error) {
+      console.error("Error authenticating with Google: ", error);
+    }
   };
 
   return (
@@ -175,11 +188,9 @@ export default function HomeComponent() {
       </HStack>
       <Divider my={4} />
       <VStack space={4}>
-        <Box>
-          <CreateAccount />
-        </Box>
         <Box width={{ base: "80%" }} margin={"auto"}>
           <Button
+            onPress={() => handleAuthGoogle()}
             bg={"#176BEF"}
             _pressed={{
               bg: "#179c52",
