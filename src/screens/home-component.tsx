@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import {
   Box,
   Button,
@@ -10,6 +10,7 @@ import {
   Icon,
   Input,
   Text,
+  VStack,
 } from "native-base";
 import FontAwesome from "@expo/vector-icons/FontAwesome";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
@@ -17,6 +18,7 @@ import FontAwesome5 from "@expo/vector-icons/FontAwesome5";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import StatComponent from "../components/stat-component";
 import Fontisto from "@expo/vector-icons/Fontisto";
+import CreateAccount from "../components/create-account";
 
 const dataStat = [
   {
@@ -37,6 +39,27 @@ const dataStat = [
 ];
 
 export default function HomeComponent() {
+  const [password, setPassword] = React.useState("");
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setPassword(generateRandomPassword());
+    }, 1000);
+
+    return () => {
+      clearInterval(interval);
+    };
+  }, []);
+
+  const generateRandomPassword = () => {
+    const chars =
+      "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*";
+    return Array(12)
+      .fill(0)
+      .map(() => chars[Math.floor(Math.random() * chars.length)])
+      .join("");
+  };
+
   return (
     <Box
       display={"flex"}
@@ -48,7 +71,11 @@ export default function HomeComponent() {
       bg={"white"}
     >
       <Box p={5}>
-        <Heading textAlign={"center"} size={"2xl"}>
+        <Heading
+          textAlign={"center"}
+          size={"2xl"}
+          fontFamily={"Parkinsans-Medium"}
+        >
           Password AI
         </Heading>
         <Text textAlign={"center"} fontStyle={"italic"}>
@@ -58,14 +85,20 @@ export default function HomeComponent() {
           ¡Tu superHéroe digital de las contraseñas!
         </Text>
       </Box>
-      <Box mt={{ base: 2, md: 30 }} width={"90%"} margin={"auto"}>
+      <Box
+        mt={{ base: 2, md: 30 }}
+        width={"90%"}
+        margin={"auto"}
+        pointerEvents={"none"}
+      >
         <Input
           textAlign={"center"}
+          fontFamily={"Parkinsans"}
           fontSize={"3xl"}
-          value="KJDJH72N23LK3"
-          pointerEvents={"none"}
+          value={password}
           size={"2xl"}
           height={100}
+          textDecoration={"none"}
         />
       </Box>
       <HStack
@@ -140,18 +173,23 @@ export default function HomeComponent() {
           );
         })}
       </HStack>
-      <Divider my={5} />
-      <Box width={{ base: "80%" }} margin={"auto"} mt={10}>
-        <Button
-          bg={"#176BEF"}
-          _pressed={{
-            bg: "#179c52",
-          }}
-          rightIcon={<Fontisto name="google" size={24} color="white" />}
-        >
-          <Text color={"white"}>Accede con tu cuenta Google</Text>
-        </Button>
-      </Box>
+      <Divider my={4} />
+      <VStack space={4}>
+        <Box>
+          <CreateAccount />
+        </Box>
+        <Box width={{ base: "80%" }} margin={"auto"}>
+          <Button
+            bg={"#176BEF"}
+            _pressed={{
+              bg: "#179c52",
+            }}
+            rightIcon={<Fontisto name="google" size={24} color="white" />}
+          >
+            <Text color={"white"}>Accede con tu cuenta Google</Text>
+          </Button>
+        </Box>
+      </VStack>
     </Box>
   );
 }
